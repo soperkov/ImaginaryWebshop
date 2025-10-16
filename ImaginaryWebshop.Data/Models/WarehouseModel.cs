@@ -2,8 +2,9 @@
 {
     public class WarehouseModel
     {
-        public int Id { get; set; }
-        public int ProductId { get; set; }
+        [Key] public Guid Id { get; set; }
+        [ForeignKey(nameof(Product))] public Guid ProductId { get; set; }
+        public ProductModel Product { get; set; } = null!;
         public int StockQuantity { get; set; }
         public int Position { get; set; }
     }
