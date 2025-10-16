@@ -1,4 +1,5 @@
 ﻿global using ImaginaryWebshop.Data.Models;
+global using ImaginaryWebshop.Data.Dtos;
 
 global using Microsoft.EntityFrameworkCore;
 global using Microsoft.EntityFrameworkCore.Metadata.Builders;
