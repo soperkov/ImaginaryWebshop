@@ -2,6 +2,11 @@
 {
     public class OrderService : IOrderService
     {
+        private readonly AppDbContext _context;
+        public OrderService(AppDbContext context)
+        {
+            _context = context;
+        }
         Task<Guid> IOrderService.CreateOrderAsync(OrderCreateDto orderCreateDto)
         {
             throw new NotImplementedException();

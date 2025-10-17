@@ -2,6 +2,11 @@
 {
     public class WarehouseService : IWarehouseService
     {
+        private readonly AppDbContext _context;
+        public WarehouseService(AppDbContext context)
+        {
+            _context = context;
+        }
         Task<Guid> IWarehouseService.CreateWarehouseItemAsync(WarehouseCreateDto createDto)
         {
             throw new NotImplementedException();

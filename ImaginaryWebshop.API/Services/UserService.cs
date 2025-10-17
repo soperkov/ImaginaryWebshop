@@ -2,6 +2,11 @@
 {
     public class UserService : IUserService
     {
+        private readonly AppDbContext _context;
+        public UserService(AppDbContext context)
+        {
+            _context = context;
+        }
         Task<UserDetailsDto> IUserService.GetUserAsync(Guid id)
         {
             throw new NotImplementedException();

@@ -2,6 +2,11 @@
 {
     public class ProductService : IProductService
     {
+        private readonly AppDbContext _context;
+        public ProductService(AppDbContext context)
+        {
+            _context = context;
+        }
         Task<Guid> IProductService.CreateProductAsync(ProductCreateDto product)
         {
             throw new NotImplementedException();
