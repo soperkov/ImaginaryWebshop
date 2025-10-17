@@ -2,8 +2,8 @@
 {
     public interface IUserService
     {
-        Task<string> RegisterAsync(UserCreateDto user);
-        Task<string> LoginAsync(UserLoginDto user);
-        Task<UserDetailsDto> GetUserAsync (Guid id);
+        Task<Guid> RegisterAsync(RegistrationDto user);
+        Task<Guid?> LoginAsync(UserLoginDto user);
+        Task<UserDetailsDto?> GetUserAsync (Guid id);
     }
 }
