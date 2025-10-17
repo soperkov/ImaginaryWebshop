@@ -7,24 +7,83 @@
         {
             _context = context;
         }
-        Task<Guid> IProductService.CreateProductAsync(ProductCreateDto product)
+        public async Task<Guid> CreateProductAsync(ProductCreateDto dto)
         {
-            throw new NotImplementedException();
+            var product = new ProductModel
+            {
+                Id = Guid.NewGuid(),
+                Name = dto.Name,
+                Description = dto.Description,
+                Price = dto.Price,
+                Category = dto.Category
+            };
+
+            _context.Products.Add(product);
+            await _context.SaveChangesAsync();
+            return product.Id;
         }
 
-        Task<List<ProductDetailsDto>> IProductService.GetAllProductsAsync()
+        public async Task<List<ProductDetailsDto>> GetAllProductsAsync()
         {
-            throw new NotImplementedException();
+            var products = await _context.Products
+                .AsNoTracking()
+                .ToListAsync();
+            return products.Select(p => new ProductDetailsDto
+            {
+                Id = p.Id,
+                Name = p.Name,
+                Description = p.Description,
+                Price = p.Price,
+                Category = p.Category
+            }).ToList();
         }
 
-        Task<ProductDetailsDto> IProductService.GetProductDetailsAsync(Guid id)
+        public async Task<ProductDetailsDto> GetProductDetailsAsync(Guid id)
         {
-            throw new NotImplementedException();
+            var product = await _context.Products
+                .AsNoTracking()
+                .FirstOrDefaultAsync(p => p.Id == id);
+
+            if (product == null)
+                throw new KeyNotFoundException("Product not found");
+
+            return new ProductDetailsDto
+            {
+                Id = product.Id,
+                Name = product.Name,
+                Description = product.Description,
+                Price = product.Price,
+                Category = product.Category
+            };
         }
 
-        Task IProductService.UpdateProductAsync(Guid id, ProductUpdateDto product)
+        public async Task UpdateProductAsync(Guid id, ProductUpdateDto dto)
         {
-            throw new NotImplementedException();
+            var product = await _context.Products.FirstOrDefaultAsync(p => p.Id == id);
+
+            if (product == null)
+            {
+                throw new KeyNotFoundException("Product not found");
+            }
+
+            if (!string.IsNullOrEmpty(dto.Category))
+            {
+                product.Category = dto.Category;
+            }
+            if (!string.IsNullOrEmpty(dto.Description))
+            {
+                product.Description = dto.Description;
+            }
+            if (!string.IsNullOrEmpty(dto.Name))
+            {
+                product.Name = dto.Name;
+            }
+            if (dto.Price.HasValue)
+            {
+                product.Price = dto.Price.Value;
+            }
+
+            await _context.SaveChangesAsync();
         }
     }
 }
