@@ -8,3 +8,4 @@
         Task<List<WarehouseDetailsDto>> GetAllAsync();
     }
 }
+        

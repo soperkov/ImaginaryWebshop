@@ -44,7 +44,6 @@
             if (exists)
                 throw new InvalidOperationException("User with this email or username already exists.");
 
-
             var passwordHash = BCrypt.Net.BCrypt.HashPassword(dto.Password);
 
             var user = new UserModel
