@@ -10,34 +10,30 @@
         public async Task<Guid> CreateOrderAsync(OrderCreateDto orderCreateDto)
         {
             var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == orderCreateDto.UserId);
-            var product = await _context.Users.FirstOrDefaultAsync(p => p.Id ==  orderCreateDto.ProductId);
 
             if (user == null)
             {
                 throw new KeyNotFoundException("User not found");
             }
-            if (product == null)
+            if (orderCreateDto.Items == null || orderCreateDto.Items.Count == 0)
             {
-                throw new KeyNotFoundException("Product not found");
-            }
-
-            var warehouseItem = await _context.Warehouse.FirstOrDefaultAsync(w => w.ProductId ==  orderCreateDto.ProductId);
-            if (warehouseItem == null || orderCreateDto.Quantity > warehouseItem.StockQuantity)
-            {
-                throw new InvalidOperationException("Not enough product for this order");
+                throw new InvalidOperationException("Order must have at least one item.");
             }
 
             var order = new OrderModel
             {
                 Id = Guid.NewGuid(),
                 UserId = orderCreateDto.UserId,
-                ProductId = orderCreateDto.ProductId,
-                Quantity = orderCreateDto.Quantity,
-                OrderDate = DateTime.UtcNow
+                OrderDate = DateTime.UtcNow,
+                Products = orderCreateDto.Items.Select(p => new ProductOrderModel
+                {
+                    Id = Guid.NewGuid(),
+                    ProductId = p.ProductId,
+                    Quantity = p.Quantity
+                }).ToList()
             };
 
-            warehouseItem.StockQuantity -= orderCreateDto.Quantity;
-
+            _context.Orders.Add(order);
             await _context.SaveChangesAsync();
 
             return order.Id;
