@@ -26,14 +26,28 @@
         }
 
         [HttpGet("{orderId}")]
-        public async Task<ActionResult<OrderDetailsDto>> GetOrderDetails([FromQuery]Guid orderId, Guid userId)
+        public async Task<ActionResult<OrderDetailsDto>> GetOrderDetails([FromRoute]Guid orderId, [FromQuery]Guid userId)
         {
-            var order = await _orderService.GetOrderDetailsAsync(orderId, userId);
-            if (order == null)
+            try
+            {
+                var order = await _orderService.GetOrderDetailsAsync(orderId, userId);
+                return Ok(order);
+            }
+            catch (KeyNotFoundException)
             {
                 return NotFound();
             }
-            return Ok(order);
+        }
+
+        [HttpGet("{orderId}/items/{productId}")]
+        public async Task<ActionResult<ProductOrderDetailsDto>> GetOrderItem([FromRoute]Guid orderId,[FromRoute]Guid productId,[FromQuery]Guid userId)
+        {
+            var item = await _orderService.GetOrderItemAsync(orderId, productId, userId);
+            if (item == null)
+            {
+                return NotFound();
+            }
+            return Ok(item);
         }
     }
 }

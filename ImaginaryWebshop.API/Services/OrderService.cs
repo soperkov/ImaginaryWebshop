@@ -79,6 +79,7 @@
                 .Where(o => o.UserId == userId)
                 .Include(o => o.Products)
                 .ThenInclude(po => po.Product)
+                .Include(o => o.User)
                 .AsNoTracking()
                 .ToListAsync();
 
@@ -88,6 +89,12 @@
                 OrderNumber = o.OrderNumber,
                 OrderDate = o.OrderDate,
                 Amount = o.Amount,
+                User = new UserDetailsDto
+                {
+                    Id = o.UserId,
+                    Username = o.User.Username,
+                    Email = o.User.Email
+                },
                 Products = o.Products.Select(po => new ProductOrderDetailsDto
                 {
                     ProductId = po.ProductId,
@@ -123,6 +130,31 @@
                     Price = po.Product.Price,
                     Quantity = po.Quantity
                 }).ToList(),
+            };
+        }
+
+        public async Task<ProductOrderDetailsDto> GetOrderItemAsync(Guid orderId, Guid productId, Guid userId)
+        {
+            var item = await _context.ProductsInOrder
+                .Include(po => po.Product)
+                .Include(po => po.Order)
+                .Where(po => po.OrderId == orderId
+                          && po.ProductId == productId
+                          && po.Order.UserId == userId)
+                .AsNoTracking()
+                .FirstOrDefaultAsync();
+
+            if (item == null)
+            {
+                throw new KeyNotFoundException("Product not found");
+            }
+
+            return new ProductOrderDetailsDto
+            {
+                ProductId = item.ProductId,
+                ProductName = item.Product.Name,
+                Price = item.Product.Price,
+                Quantity = item.Quantity
             };
         }
     }
