@@ -5,3 +5,4 @@ global using ImaginaryWebshop.Data.Dtos;
 global using ImaginaryWebshop.API.Services;
 
 global using Microsoft.EntityFrameworkCore;
+global using System.Linq;
