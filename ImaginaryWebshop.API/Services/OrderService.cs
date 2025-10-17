@@ -20,11 +20,45 @@
                 throw new InvalidOperationException("Order must have at least one item.");
             }
 
+            var productIds = orderCreateDto.Items.Select(p => p.ProductId).ToList();
+
+            var products = await _context.Products
+                .Where(p => productIds.Contains(p.Id))
+                .ToListAsync();
+
+            var warehouse = await _context.Warehouse
+                .Where(w => productIds.Contains(w.ProductId))
+                .ToListAsync();
+
+            double totalAmount = 0;
+
+            foreach (var item in orderCreateDto.Items)
+            {
+                var product = products.FirstOrDefault(p => p.Id == item.ProductId);
+                if (product == null)
+                {
+                    throw new KeyNotFoundException("Product not found.");
+                }
+                var stockItem = warehouse.FirstOrDefault(w => w.ProductId == item.ProductId);
+                if (stockItem == null || stockItem.StockQuantity < item.Quantity)
+                {
+                    throw new InvalidOperationException("Not enough products in stock.");
+                }
+
+                totalAmount += product.Price * item.Quantity;
+                stockItem.StockQuantity -= item.Quantity;
+            }
+
+            var random = new Random();
+            var orderNumber = DateTime.UtcNow.ToString("yyyyMMddHHmmss") + "-" + random.Next(1000, 9999);
+
             var order = new OrderModel
             {
                 Id = Guid.NewGuid(),
                 UserId = orderCreateDto.UserId,
+                Amount = totalAmount,
                 OrderDate = DateTime.UtcNow,
+                OrderNumber = orderNumber,
                 Products = orderCreateDto.Items.Select(p => new ProductOrderModel
                 {
                     Id = Guid.NewGuid(),
@@ -43,28 +77,24 @@
         {
             var orders = await _context.Orders
                 .Where(o => o.UserId == userId)
+                .Include(o => o.Products)
+                .ThenInclude(po => po.Product)
                 .AsNoTracking()
                 .ToListAsync();
 
             return orders.Select(o => new OrderDetailsDto
             {
                 Id = o.Id,
-                Quantity = o.Quantity,
+                OrderNumber = o.OrderNumber,
                 OrderDate = o.OrderDate,
-                User = new UserDetailsDto
+                Amount = o.Amount,
+                Products = o.Products.Select(po => new ProductOrderDetailsDto
                 {
-                    Id = o.User.Id,
-                    Name = o.User.Username, 
-                    Email = o.User.Email
-                },
-                Product = new ProductDetailsDto
-                {
-                    Id = o.Product.Id,
-                    Name = o.Product.Name,
-                    Description = o.Product.Description,
-                    Price = o.Product.Price,
-                    Category = o.Product.Category
-                }
+                    ProductId = po.ProductId,
+                    ProductName = po.Product.Name,
+                    Price = po.Product.Price,
+                    Quantity = po.Quantity
+                }).ToList(),
             }).ToList();
         }
 
@@ -72,8 +102,8 @@
         {
             var order = await _context.Orders
                 .Where(o => o.Id == orderId && o.UserId == userId)
-                .Include(o => o.Product)
-                .Include(o => o.User)
+                .Include(o => o.Products)
+                .ThenInclude(po => po.Product)
                 .AsNoTracking()
                 .FirstOrDefaultAsync();
 
@@ -83,22 +113,16 @@
             return new OrderDetailsDto
             {
                 Id = order.Id,
-                Quantity = order.Quantity,
+                OrderNumber = order.OrderNumber,
                 OrderDate = order.OrderDate,
-                User = new UserDetailsDto
+                Amount = order.Amount,
+                Products = order.Products.Select(po => new ProductOrderDetailsDto
                 {
-                    Id = order.User.Id,
-                    Name = order.User.Username,
-                    Email = order.User.Email
-                },
-                Product = new ProductDetailsDto
-                {
-                    Id = order.Product.Id,
-                    Name = order.Product.Name,
-                    Description = order.Product.Description,
-                    Price = order.Product.Price,
-                    Category = order.Product.Category
-                }
+                    ProductId = po.ProductId,
+                    ProductName = po.Product.Name,
+                    Price = po.Product.Price,
+                    Quantity = po.Quantity
+                }).ToList(),
             };
         }
     }
