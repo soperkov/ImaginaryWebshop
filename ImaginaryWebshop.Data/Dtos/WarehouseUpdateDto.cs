@@ -2,7 +2,7 @@
 {
     public class WarehouseUpdateDto
     {
-        public int StockQuantity { get; set; }
-        public int Position { get; set; }
+        public int? StockQuantity { get; set; }
+        public int? Position { get; set; }
     }
 }
