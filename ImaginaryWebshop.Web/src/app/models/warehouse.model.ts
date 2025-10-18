@@ -1,17 +1,17 @@
 export interface WarehouseCreateDto {
-    productId: string;
-    stockQuantity: number;
-    position: string;
+  productId: string;
+  stockQuantity: number;
+  position: string;
 }
 
 export interface WarehouseUpdateDto {
-    stockQuantity?: number;
-    position?: string;
+  stockQuantity?: number;
+  position?: string;
 }
 
 export interface WarehouseDetailsDto {
-    id: string;
-    productId: string;
-    stockQuantity: number;
-    position: string;
+  id: string;
+  productId: string;
+  stockQuantity: number;
+  position: string;
 }
