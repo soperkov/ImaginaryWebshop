@@ -15,7 +15,8 @@
                 Name = dto.Name,
                 Description = dto.Description,
                 Price = dto.Price,
-                Category = dto.Category
+                Category = dto.Category,
+                PictureUrl = dto.PictureUrl
             };
 
             _context.Products.Add(product);
@@ -34,7 +35,8 @@
                 Name = p.Name,
                 Description = p.Description,
                 Price = p.Price,
-                Category = p.Category
+                Category = p.Category,
+                PictureUrl = p.PictureUrl
             }).ToList();
         }
 
@@ -53,7 +55,8 @@
                 Name = product.Name,
                 Description = product.Description,
                 Price = product.Price,
-                Category = product.Category
+                Category = product.Category,
+                PictureUrl = product.PictureUrl
             };
         }
 
@@ -81,6 +84,10 @@
             if (dto.Price.HasValue)
             {
                 product.Price = dto.Price.Value;
+            }
+            if (!string.IsNullOrEmpty(dto.PictureUrl))
+            {
+                product.PictureUrl = dto.PictureUrl;
             }
 
             await _context.SaveChangesAsync();

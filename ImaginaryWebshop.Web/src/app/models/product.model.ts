@@ -3,6 +3,7 @@ export interface ProductCreateDto {
     description: string;
     price: number;
     category: string;
+    pictureUrl: string;
 }
 
 export interface ProductUpdateDto {
@@ -10,6 +11,7 @@ export interface ProductUpdateDto {
     description?: string;
     price?: number;
     category?: string;
+    pictureUrl?: string;
 }
 
 export interface ProductDetailsDto {
@@ -18,4 +20,5 @@ export interface ProductDetailsDto {
     description: string;
     price: number;
     category: string;
+    pictureUrl: string;
 }

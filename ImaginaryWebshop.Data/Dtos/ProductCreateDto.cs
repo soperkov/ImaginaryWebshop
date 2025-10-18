@@ -6,5 +6,6 @@
         public string Description { get; set; } = null!;
         public double Price { get; set; }
         public string Category { get; set; } = null!;
+        public string? PictureUrl { get; set; }
     }
 }
