@@ -8,7 +8,9 @@
     <div class="grid" *ngIf="products.length">
       <div class="card" *ngFor="let p of products; trackBy: trackById">
         <div class="thumb-wrap">
-          <img [src]="p.pictureUrl || 'assets/placeholder.png'" class="thumb" alt="{{ p.name }}" />
+          <div class="card-thumb">
+            <img [src]="imgSrc(p.pictureUrl)" alt="{{ p.name }}" />
+          </div>
           <span *ngIf="outOfStock(p)" class="badge-out">Out of stock</span>
         </div>
 

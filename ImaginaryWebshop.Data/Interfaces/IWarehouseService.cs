@@ -4,7 +4,7 @@
     {
         Task<Guid> CreateWarehouseItemAsync(WarehouseCreateDto createDto);
         Task UpdateWarehouseItemAsync(Guid id, WarehouseUpdateDto updateDto);
-        Task<WarehouseDetailsDto> GetWarehouseItemDetailsAsync (Guid id);
+        Task<WarehouseDetailsDto> GetWarehouseItemDetailsAsync (Guid itemId);
         Task<List<WarehouseDetailsDto>> GetAllAsync();
     }
 }

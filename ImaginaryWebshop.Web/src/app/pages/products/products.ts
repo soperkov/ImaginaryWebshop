@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { WarehouseService } from '../../services/warehouse.service';
 import { CartService } from '../../services/cart.service';
 import { WarehouseDetailsDto } from '../../models/warehouse.model';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-products',
@@ -86,18 +87,27 @@ export class Products {
   }
 
   addToCart(p: ProductDetailsDto): void {
-  if (this.outOfStock(p)) return;
-  const qty = this.quantities[p.id] ?? 0;
-  this.cart.add(
-    {
-      productId: p.id,
-      name: p.name,
-      price: p.price,
-      pictureUrl: (p as any).pictureUrl ?? (p as any).picture ?? null
-    },
-    qty
-  )
-}
+    if (this.outOfStock(p)) return;
+    const qty = this.quantities[p.id] ?? 0;
+    this.cart.add(
+      {
+        productId: p.id,
+        name: p.name,
+        price: p.price,
+        pictureUrl: (p as any).pictureUrl ?? (p as any).picture ?? null
+      },
+      qty
+    )
+  }
+
+  imgSrc(u?: string | null): string {
+    if (!u) return '';
+    if (/^https?:\/\//i.test(u)) return u;
+
+    const base = new URL(environment.apiBaseUrl, window.location.origin);
+    const origin = base.origin; 
+    return `${origin}${u.startsWith('/') ? u : '/' + u}`;
+  }
 
   trackById(_: number, item: ProductDetailsDto) {
     return item.id;

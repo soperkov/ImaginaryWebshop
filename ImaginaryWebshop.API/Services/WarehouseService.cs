@@ -55,11 +55,11 @@
             }).ToList();
         }
 
-        public async Task<WarehouseDetailsDto> GetWarehouseItemDetailsAsync(Guid id)
+        public async Task<WarehouseDetailsDto> GetWarehouseItemDetailsAsync(Guid itemId)
         {
             var item = await _context.Warehouse
                 .AsNoTracking()
-                .FirstOrDefaultAsync(w => id == w.Id);
+                .FirstOrDefaultAsync(w => itemId == w.ProductId);
 
             if (item == null)
                 throw new KeyNotFoundException("Warehouse item not found.");

@@ -27,4 +27,13 @@ export class ProductService {
   getAllProducts(): Observable<ProductDetailsDto[]> {
     return this.http.get<ProductDetailsDto[]>(`${this.base}`);
   }
+
+  uploadImage(file: File, productId?: string): Observable<string> {
+    const form = new FormData();
+    form.append('file', file);
+    const url = productId
+      ? `${this.base}/image?productId=${productId}`
+      : `${this.base}/image`;
+    return this.http.post(url, form, { responseType: 'text' });
+  }
 }
