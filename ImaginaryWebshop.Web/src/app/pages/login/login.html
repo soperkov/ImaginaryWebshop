@@ -23,7 +23,7 @@
 
       <label>Password</label>
       <input type="password" class="form-control" formControlName="password" />
-      <div *ngIf="loginForm.controls['password'].touched"
+      <div *ngIf="loginForm.controls['password'].touched && loginForm.controls['password'].invalid"
            class="error-text">This field is required.</div>
 
       <button class="btn btn-primary w-100" type="submit">

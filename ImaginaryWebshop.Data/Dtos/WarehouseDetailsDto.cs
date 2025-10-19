@@ -5,6 +5,6 @@
         public Guid Id { get; set; }
         public Guid ProductId { get; set; }
         public int StockQuantity { get; set; }
-        public int Position { get; set; }
+        public string Position { get; set; } = string.Empty;
     }
 }

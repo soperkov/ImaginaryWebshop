@@ -9,7 +9,7 @@
 
     <div *ngIf="items.length" class="list">
       <div class="row" *ngFor="let item of items">
-        <img [src]="item.pictureUrl || 'assets/placeholder.png'" alt="" />
+        <img [src]="imgSrc(item.pictureUrl)" alt="" />
         <div class="info">
           <div class="name">{{ item.name }}</div>
           <div class="price">{{ item.price | number:'1.2-2' }} €</div>

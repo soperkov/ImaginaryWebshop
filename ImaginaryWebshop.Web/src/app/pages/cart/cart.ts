@@ -4,6 +4,7 @@ import { CartService } from '../../services/cart.service';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { OrderService } from '../../services/order.service';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-cart',
@@ -84,6 +85,13 @@ export class Cart {
   }
 
   goToProducts() {
-  this.router.navigateByUrl('/products');
-}
+    this.router.navigateByUrl('/products');
+  }
+
+  imgSrc(u?: string | null): string {
+    if (!u) return 'assets/placeholder.png';
+    if (/^https?:\/\//i.test(u)) return u;
+    const base = new URL(environment.apiBaseUrl, window.location.origin);
+    return `${base.origin}${u.startsWith('/') ? u : '/' + u}`;
+  }
 }

@@ -6,6 +6,6 @@
         [ForeignKey(nameof(Product))] public Guid ProductId { get; set; }
         public ProductModel Product { get; set; } = null!;
         public int StockQuantity { get; set; }
-        public int Position { get; set; }
+        public string Position { get; set; } = string.Empty;
     }
 }

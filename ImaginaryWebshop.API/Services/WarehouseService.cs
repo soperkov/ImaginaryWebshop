@@ -32,9 +32,9 @@
             {
                 item.StockQuantity = updateDto.StockQuantity.Value;
             }
-            if (updateDto.Position.HasValue)
+            if (!string.IsNullOrEmpty(updateDto.Position))
             {
-                item.Position = updateDto.Position.Value;
+                item.Position = updateDto.Position;
             }
 
             await _context.SaveChangesAsync();
