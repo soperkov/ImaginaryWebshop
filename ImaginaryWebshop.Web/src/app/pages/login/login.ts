@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormBuilder, Validators, AbstractControl, ValidationErrors, FormGroup, FormControl } from '@angular/forms';
+import { FormBuilder, Validators, AbstractControl, ValidationErrors, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { RegistrationDto, UserDetailsDto, UserLoginDto } from '../../models/user.model';
 import { UserService } from '../../services/user.service';
@@ -20,7 +20,7 @@ export class Login {
   constructor(private fb: FormBuilder, private router: Router, private us: UserService) {
     this.loginForm = this.fb.nonNullable.group({
     usernameOrEmail: ['', [Validators.required]],
-    password: ['', [Validators.required, Validators.minLength(8)]]
+    password: ['', [Validators.required]]
   });
 
   this.registerForm = this.fb.nonNullable.group({
@@ -47,7 +47,7 @@ export class Login {
     const dto: UserLoginDto = this.loginForm.getRawValue();
     this.us.login(dto).subscribe({
       next: (id: string) => {
-        this.router.navigateByUrl('/home');
+        this.router.navigateByUrl('/products');
       },
       error: (err) => {
         this.errorMessage = 'Login failed. Check your credentials.';
