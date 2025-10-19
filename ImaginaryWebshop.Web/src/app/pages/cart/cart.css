@@ -1,0 +1,52 @@
+.cart-page { display: flex; justify-content: center; padding: 2rem; }
+.cart-container { width: 100%; max-width: 900px; }
+.title { color: #c2185b; font-weight: 700; margin-bottom: 1rem; }
+
+.empty { text-align: center; color: #c2185b; font-weight: 500; }
+.mt { margin-top: 1rem; }
+.btn-back {
+  background: #ffb6c1; border: none; color: #fff; padding: .5rem 1rem; border-radius: 10px; font-weight: 600;
+}
+
+.list { display: grid; gap: 1rem; }
+
+.row {
+  display: grid; grid-template-columns: 80px 1fr 120px; align-items: center;
+  gap: 1rem; background: #fff; border-radius: 14px; padding: .75rem 1rem;
+  box-shadow: 0 4px 10px rgba(255, 182, 193, 0.25);
+}
+
+.row img { width: 80px; height: 80px; object-fit: cover; border-radius: 10px; }
+
+.info .name { font-weight: 600; color: #c2185b; }
+.info .price { color: #e91e63; font-weight: 600; margin-top: .25rem; }
+
+.qty { display: inline-flex; align-items: center; gap: .5rem; margin-top: .5rem; }
+.qty button {
+  background: #ffd6e8; border: none; width: 28px; height: 28px; border-radius: 50%;
+  color: #c2185b; font-weight: 700; cursor: pointer;
+}
+.qty button:hover { background: #ffb6c1; }
+.qty span { min-width: 24px; text-align: center; font-weight: 600; color: #c2185b; }
+
+.sum { text-align: right; font-weight: 700; color: #c2185b; }
+.remove {
+  display: block; margin-top: .25rem; background: transparent; border: none; color: #e91e63;
+  cursor: pointer; font-weight: 600; text-decoration: underline; padding: 0;
+}
+
+.footer {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-top: 1rem; background: #fff; border-radius: 14px; padding: .75rem 1rem;
+  box-shadow: 0 4px 10px rgba(255, 182, 193, 0.25);
+}
+.total { color: #c2185b; font-weight: 700; }
+.actions { display: flex; gap: .5rem; }
+
+.btn-clear, .btn-checkout {
+  border: none; padding: .5rem 1rem; border-radius: 10px; font-weight: 600; color: #fff;
+}
+.btn-clear { background: #f78fb3; }
+.btn-checkout { background: #f06292; }
+.btn-clear:hover { filter: brightness(1.05); }
+.btn-checkout:hover { filter: brightness(1.05); }

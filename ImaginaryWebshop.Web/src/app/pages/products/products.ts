@@ -3,6 +3,8 @@ import { ProductDetailsDto } from '../../models/product.model';
 import { ProductService } from '../../services/product.service';
 import { Router } from '@angular/router';
 import { WarehouseService } from '../../services/warehouse.service';
+import { CartService } from '../../services/cart.service';
+import { WarehouseDetailsDto } from '../../models/warehouse.model';
 
 @Component({
   selector: 'app-products',
@@ -16,7 +18,7 @@ export class Products {
   quantities: { [key: string ] : number } = {};
   stockMap: { [key: string ] : number } = {};
 
-  constructor(private ps: ProductService, private ws: WarehouseService, private router: Router) {}
+  constructor(private ps: ProductService, private ws: WarehouseService, private cart: CartService, private router: Router) {}
 
   ngOnInit(): void {
     this.loadProducts();
@@ -25,7 +27,7 @@ export class Products {
   loadProducts(): void {
       this.ws.getAll().subscribe({
     next: (warehouseItems) => {
-      warehouseItems.forEach((w: any) => {
+      warehouseItems.forEach((w: WarehouseDetailsDto) => {
         const productId = w.productId;
         const qty = w.stockQuantity ?? 0;
         if (productId) this.stockMap[productId] = qty;
@@ -36,6 +38,7 @@ export class Products {
           this.products = res;
           this.products.forEach(p => {
             const stock = this.stockOf(p);
+            this.cart.setStockMap(this.stockMap);
             this.quantities[p.id] = stock > 0 ? 1 : 0;
           });
         },
@@ -83,9 +86,18 @@ export class Products {
   }
 
   addToCart(p: ProductDetailsDto): void {
-    if (this.outOfStock(p)) return;
-    const qty = this.quantities[p.id];
-  }
+  if (this.outOfStock(p)) return;
+  const qty = this.quantities[p.id] ?? 0;
+  this.cart.add(
+    {
+      productId: p.id,
+      name: p.name,
+      price: p.price,
+      pictureUrl: (p as any).pictureUrl ?? (p as any).picture ?? null
+    },
+    qty
+  )
+}
 
   trackById(_: number, item: ProductDetailsDto) {
     return item.id;

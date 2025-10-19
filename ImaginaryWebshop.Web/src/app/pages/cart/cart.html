@@ -1,1 +1,37 @@
-<p>cart works!</p>
+<div class="cart-page">
+  <div class="cart-container">
+    <h2 class="title">Your Cart</h2>
+
+    <div *ngIf="!items.length" class="empty">
+      Your cart is empty.
+      <div class="mt"><button class="btn-back" (click)="goToProducts()">Back to products</button></div>
+    </div>
+
+    <div *ngIf="items.length" class="list">
+      <div class="row" *ngFor="let item of items">
+        <img [src]="item.pictureUrl || 'assets/placeholder.png'" alt="" />
+        <div class="info">
+          <div class="name">{{ item.name }}</div>
+          <div class="price">{{ item.price | number:'1.2-2' }} €</div>
+          <div class="qty">
+            <button (click)="decrease(item)">−</button>
+            <span>{{ item.quantity }}</span>
+            <button (click)="increase(item)">+</button>
+          </div>
+        </div>
+        <div class="sum">
+          {{ (item.price * item.quantity) | number:'1.2-2' }} €
+          <button class="remove" (click)="remove(item)">Remove</button>
+        </div>
+      </div>
+
+      <div class="footer">
+        <div class="total">Total: {{ total() | number:'1.2-2' }} €</div>
+        <div class="actions">
+          <button class="btn-clear" (click)="clear()">Clear</button>
+          <button class="btn-checkout" (click)="checkout()">Checkout</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
