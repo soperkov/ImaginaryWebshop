@@ -3,16 +3,17 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing-module';
 import { App } from './app';
-import { Home } from './components/home/home';
-import { Cart } from './components/cart/cart';
-import { Products } from './components/products/products';
-import { ProductDetails } from './components/product-details/product-details';
-import { Orders } from './components/orders/orders';
-import { OrderDetails } from './components/order-details/order-details';
-import { WarehouseList } from './components/warehouse-list/warehouse-list';
-import { WarehouseDetails } from './components/warehouse-details/warehouse-details';
-import { WarehouseForm } from './components/warehouse-form/warehouse-form';
-import { ProductForm } from './components/product-form/product-form';
+import { Home } from './pages/home/home';
+import { Cart } from './pages/cart/cart';
+import { Products } from './pages/products/products';
+import { ProductDetails } from './pages/product-details/product-details';
+import { Orders } from './pages/orders/orders';
+import { OrderDetails } from './pages/order-details/order-details';
+import { WarehouseList } from './pages/warehouse-list/warehouse-list';
+import { WarehouseDetails } from './pages/warehouse-details/warehouse-details';
+import { WarehouseForm } from './pages/warehouse-form/warehouse-form';
+import { ProductForm } from './pages/product-form/product-form';
+import { Login } from './pages/login/login';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { ProductForm } from './components/product-form/product-form';
     WarehouseList,
     WarehouseDetails,
     WarehouseForm,
-    ProductForm
+    ProductForm,
+    Login
   ],
   imports: [
     BrowserModule,
