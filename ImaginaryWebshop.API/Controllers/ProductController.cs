@@ -41,5 +41,30 @@
             var products = await _productService.GetAllProductsAsync();
             return Ok(products);
         }
+
+        [HttpPost("image")]
+        public async Task<ActionResult<string>> UploadImage([FromForm] IFormFile file, [FromQuery] Guid? productId, [FromServices] IWebHostEnvironment env,
+        [FromServices] IUploadsService uploads, [FromServices] IProductService products)
+        {
+            if (file == null || file.Length == 0)
+            {
+                return BadRequest("No file.");
+            }
+
+            string? oldUrl = null;
+            if (productId.HasValue)
+            {
+                var existing = await products.GetProductDetailsAsync(productId.Value);
+                oldUrl = existing?.PictureUrl;
+            }
+
+            await using var stream = file.OpenReadStream();
+            var url = await uploads.SaveProductImageAsync(stream, file.FileName, env.WebRootPath!, oldUrl);
+
+            if (productId.HasValue)
+                await products.UpdateProductAsync(productId.Value, new ProductUpdateDto { PictureUrl = url });
+
+            return Ok(url);
+        }
     }
 }

@@ -8,6 +8,7 @@ builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IWarehouseService, WarehouseService>();
+builder.Services.AddScoped<IUploadsService, UploadsService>();
 
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 builder.Services.AddCors(options =>
@@ -35,6 +36,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseCors("_myAllowSpecificOrigins");
+
+app.UseStaticFiles();
 
 app.UseHttpsRedirection();
 
