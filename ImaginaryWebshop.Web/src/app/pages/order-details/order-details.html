@@ -1,1 +1,63 @@
-<p>order-details works!</p>
+<div class="order-page">
+  <div class="order-container">
+    <div class="order-card">
+      <div class="rainbow-bar"></div>
+
+      <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+
+      <section *ngIf="order">
+        <header class="order-header">
+          <h2 class="title">
+            Order #{{ order.orderNumber }}
+            <span class="badge">{{ order.orderDate | date: 'mediumDate' }}</span>
+          </h2>
+
+          <div class="meta">
+            <span><strong>Customer:</strong> {{ username || 'Unknown' }}</span>
+            <span><strong>Total:</strong> {{ order.amount | currency }}</span>
+          </div>
+        </header>
+
+        <h3 class="subtitle">Products</h3>
+        <table class="items">
+          <thead>
+            <tr>
+              <th>Product</th>
+              <th class="num">Price</th>
+              <th class="num">Quantity</th>
+              <th class="num">Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let p of order.products">
+              <td>{{ p.productName }}</td>
+              <td class="num">{{ p.price | currency }}</td>
+              <td class="num">{{ p.quantity }}</td>
+              <td class="num">{{ itemTotal(p) | currency }}</td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td colspan="3" class="num total-label">Grand Total</td>
+              <td class="num total">{{ order.amount | currency }}</td>
+            </tr>
+          </tfoot>
+        </table>
+
+        <div class="footer">
+          <div class="total-box">
+            Total: {{ order.amount | currency }}
+          </div>
+          <div class="actions">
+            <button type="button" class="btn-alt" (click)="goToProducts()">
+              Continue Shopping
+            </button>
+            <button type="button" class="btn-primary" (click)="goToOrders()">
+              My Orders
+            </button>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>

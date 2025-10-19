@@ -11,6 +11,7 @@ import { Orders } from './pages/orders/orders';
 import { OrderDetails } from './pages/order-details/order-details';
 import { ProductForm } from './pages/product-form/product-form';
 import { Login } from './pages/login/login';
+import { Navbar } from './shared/navbar/navbar';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { Login } from './pages/login/login';
     Orders,
     OrderDetails,
     ProductForm,
-    Login
+    Login,
+    Navbar
   ],
   imports: [
     BrowserModule,

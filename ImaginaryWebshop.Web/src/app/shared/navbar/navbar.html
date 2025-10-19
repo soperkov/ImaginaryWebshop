@@ -1,0 +1,12 @@
+<nav class="navbar">
+  <div class="nav-left">
+    <a class="brand" routerLink="/products">🦄 Imaginary Webshop</a>
+  </div>
+
+  <div class="nav-right">
+    <a routerLink="/products" routerLinkActive="active">Products</a>
+    <a routerLink="/orders" routerLinkActive="active">Orders</a>
+    <a routerLink="/cart" routerLinkActive="active">Cart</a>
+    <a (click)="logout()" class="logout">Logout</a>
+  </div>
+</nav>

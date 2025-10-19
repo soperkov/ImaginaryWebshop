@@ -47,6 +47,7 @@ export class Login {
     const dto: UserLoginDto = this.loginForm.getRawValue();
     this.us.login(dto).subscribe({
       next: (id: string) => {
+        localStorage.setItem('userId', id);
         this.router.navigateByUrl('/products');
       },
       error: (err) => {

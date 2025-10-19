@@ -3,6 +3,7 @@ import { CartItem } from '../../models/cart.model';
 import { CartService } from '../../services/cart.service';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { OrderService } from '../../services/order.service';
 
 @Component({
   selector: 'app-cart',
@@ -14,7 +15,7 @@ export class Cart {
   items: CartItem[] = [];
   private subscription?: Subscription;
 
-  constructor(private cart: CartService, private router: Router) {}
+  constructor(private cart: CartService, private os: OrderService, private router: Router) {}
 
   ngOnInit(): void {
     this.subscription = this.cart.items$.subscribe(list => {
@@ -55,7 +56,31 @@ export class Cart {
   }
 
   checkout() {
-    
+    const userId = localStorage.getItem('userId');
+    if (!userId) {
+      alert('You must be logged in to place an order.');
+      this.router.navigateByUrl('/login');
+      return;
+    }
+
+    const order = {
+    userId,
+    items: this.items.map(it => ({
+      productId: it.productId,
+      quantity: it.quantity,
+    })),
+  };
+
+    this.os.createOrder(order).subscribe({
+      next: (orderId: string) => {
+        this.cart.clear();
+        this.router.navigateByUrl(`/orders/${orderId}`);
+      },
+      error: (err) => {
+      console.error(err);
+      alert('Could not place the order. Please try again.');
+    }
+    })
   }
 
   goToProducts() {

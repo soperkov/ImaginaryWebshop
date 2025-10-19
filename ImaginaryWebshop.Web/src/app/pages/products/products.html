@@ -6,10 +6,7 @@
     <div *ngIf="!errorMessage && products.length === 0" class="info">No products found.</div>
 
     <div class="grid" *ngIf="products.length">
-      <div
-        class="card"
-        *ngFor="let p of products; trackBy: trackById"
-      >
+      <div class="card" *ngFor="let p of products; trackBy: trackById">
         <div class="thumb-wrap">
           <img [src]="p.pictureUrl || 'assets/placeholder.png'" class="thumb" alt="{{ p.name }}" />
           <span *ngIf="outOfStock(p)" class="badge-out">Out of stock</span>
@@ -18,28 +15,17 @@
         <div class="meta">
           <h5 class="name">{{ p.name }}</h5>
           <p class="desc">{{ p.description }}</p>
-          <p class="price">{{ p.price | number:'1.2-2' }} €</p>
-          <p class="stock">In stock: {{ stockOf(p) }}</p>
         </div>
-
+        <div class="prock">
+            <p class="price">{{ p.price | number:'1.2-2' }} €</p>
+            <p class="stock">In stock: {{ stockOf(p) }}</p>
+        </div>
+        
         <div class="actions">
-          <div class="qty-controls">
-            <button
-              type="button"
-              (click)="decrease(p)"
-              [disabled]="!canDecrease(p)"
-              aria-label="Decrease quantity"
-            >−</button>
-
+            <div class="qty-controls">
+            <button type="button" (click)="decrease(p)" [disabled]="!canDecrease(p)">−</button>
             <span class="qty">{{ quantities[p.id] }}</span>
-
-            <button
-              type="button"
-              (click)="increase(p)"
-              [disabled]="!canIncrease(p)"
-              aria-label="Increase quantity"
-              title="{{ atMax(p) ? 'Max: ' + stockOf(p) : '' }}"
-            >+</button>
+            <button type="button" (click)="increase(p)" [disabled]="!canIncrease(p)">+</button>
           </div>
 
           <button
@@ -47,8 +33,7 @@
             class="btn-cart"
             (click)="addToCart(p)"
             [disabled]="outOfStock(p)"
-            aria-disabled="{{ outOfStock(p) }}"
-            title="{{ outOfStock(p) ? 'Out of stock' : 'Add to cart' }}"
+            [title]="outOfStock(p) ? 'Out of stock' : 'Add to cart'"
           >
             Add to cart
           </button>
