@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { CartService } from '../../services/cart.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-navbar',
@@ -8,7 +10,20 @@ import { Router } from '@angular/router';
   styleUrl: './navbar.css'
 })
 export class Navbar {
-  constructor(private router: Router) {}
+  itemNumber = 0;
+  private subscription?: Subscription;
+
+  constructor(private router: Router, private cs: CartService) {}
+
+  ngOnInit(): void {
+    this.subscription = this.cs.items$.subscribe(() => {
+      this.itemNumber = this.cs.totalItems();
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.subscription?.unsubscribe();
+  }
 
   logout() {
     localStorage.removeItem('userId');

@@ -6,7 +6,9 @@
   <div class="nav-right">
     <a routerLink="/products" routerLinkActive="active">Products</a>
     <a routerLink="/orders" routerLinkActive="active">Orders</a>
-    <a routerLink="/cart" routerLinkActive="active">Cart</a>
+    <a routerLink="/cart" routerLinkActive="active">
+      Cart <strong *ngIf="itemNumber > 0">({{ itemNumber }})</strong>
+    </a>
     <a (click)="logout()" class="logout">Logout</a>
   </div>
 </nav>

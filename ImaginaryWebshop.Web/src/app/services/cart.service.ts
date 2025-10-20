@@ -89,4 +89,8 @@ export class CartService {
   total(): number {
     return this.getItems().reduce((sum, it) => sum + it.price * it.quantity, 0);
   }
+
+  totalItems() : number {
+    return this.getItems().length;
+  }
 }
