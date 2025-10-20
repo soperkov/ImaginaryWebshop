@@ -86,7 +86,7 @@ ImaginaryWebshop/
 │   ├── wwwroot/
 │   │   └── uploads/
 │   │       └── products/                     # Stored product images
-│   ├── GlobalUsings.cs                       # Common global using statements
+│   └── GlobalUsings.cs                       # Common global using statements
 │
 ├── ImaginaryWebshop.Data/                    # Data Access Layer
 │   ├── Contexts/                             # AppDbContext.cs
@@ -98,12 +98,12 @@ ImaginaryWebshop/
 │   └── GlobalUsings.cs                       # Common global using statements
 │
 ├── ImaginaryWebshop.Web/                     # Angular Frontend
-│   ├── src/
-│   │   ├── app/
-│   │   │   ├── pages/                        # Page components (Products, Cart, Orders, etc.)
-│   │   │   ├── models/                       # TypeScript interfaces (Product, Order, Cart, etc.)
-│   │   │   ├── services/                     # Angular services (ProductService, CartService, etc.)
-│   │   │   └── shared/                       # Navbar
+│   └── src/
+│       └── app/
+│           ├── pages/                        # Page components (Products, Cart, Orders, etc.)
+│           ├── models/                       # TypeScript interfaces (Product, Order, Cart, etc.)
+│           ├── services/                     # Angular services (ProductService, CartService, etc.)
+│           └── shared/                       # Navbar
 │
 ├── README.md
 ```
