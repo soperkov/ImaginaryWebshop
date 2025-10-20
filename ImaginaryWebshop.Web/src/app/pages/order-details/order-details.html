@@ -14,7 +14,7 @@
 
           <div class="meta">
             <span><strong>Customer:</strong> {{ username || 'Unknown' }}</span>
-            <span><strong>Total:</strong> {{ order.amount | currency }}</span>
+            <span><strong>Total:</strong> {{ order.amount | currency:'EUR' }}</span>
           </div>
         </header>
 
@@ -31,22 +31,22 @@
           <tbody>
             <tr *ngFor="let p of order.products">
               <td>{{ p.productName }}</td>
-              <td class="num">{{ p.price | currency }}</td>
+              <td class="num">{{ p.price | currency:'EUR' }}</td>
               <td class="num">{{ p.quantity }}</td>
-              <td class="num">{{ itemTotal(p) | currency }}</td>
+              <td class="num">{{ itemTotal(p) | currency:'EUR' }}</td>
             </tr>
           </tbody>
           <tfoot>
             <tr>
               <td colspan="3" class="num total-label">Grand Total</td>
-              <td class="num total">{{ order.amount | currency }}</td>
+              <td class="num total">{{ order.amount | currency:'EUR' }}</td>
             </tr>
           </tfoot>
         </table>
 
         <div class="footer">
           <div class="total-box">
-            Total: {{ order.amount | currency }}
+            Total: {{ order.amount | currency:'EUR'}}
           </div>
           <div class="actions">
             <button type="button" class="btn-alt" (click)="goToProducts()">

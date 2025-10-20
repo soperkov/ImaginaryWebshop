@@ -52,6 +52,10 @@ export class Cart {
     this.refresh();
   }
 
+  totalItems(items: CartItem[]): number {
+    return items.length;
+  }
+
   total(): number {
     return this.cart.total();
   }

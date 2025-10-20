@@ -18,6 +18,7 @@ export class Products {
   errorMessage = '';
   quantities: { [key: string ] : number } = {};
   stockMap: { [key: string ] : number } = {};
+  alertMessage: string | null = null;
 
   constructor(private ps: ProductService, private ws: WarehouseService, private cart: CartService, private router: Router) {}
 
@@ -98,6 +99,8 @@ export class Products {
       },
       qty
     )
+    this.alertMessage = `${p.name} added to cart!`;
+    setTimeout(() => (this.alertMessage = null), 3000);
   }
 
   imgSrc(u?: string | null): string {
