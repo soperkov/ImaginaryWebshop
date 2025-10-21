@@ -26,7 +26,11 @@ INSERT INTO @Seed (ProductId, [Name], [Description], [Price], [Category], [Pictu
 (NEWID(), N'Elven Dew Moisturizer', N'Collected at dawn in Lothlorien (or a place suspiciously similar).', 27.50, N'Beauty', N'/uploads/products/ElvenMoisturizer.png', 70, N'A-12'),
 (NEWID(), N'Necromancer''s Black Salt', N'Enhances flavor and raises eyebrows.', 6.99, N'Gourmet', N'/uploads/products/BlackSalt.png', 140, N'A-13'),
 (NEWID(), N'Pocket Watch of Lost Time', N'Doesn''t tell time, it steals it.', 74.99, N'Arcane Artifacts', N'/uploads/products/PocketWatch.png', 22, N'A-14'),
-(NEWID(), N'Starlight Ink', N'Glows with your thoughts. For celestial correspondence only.', 22.00, N'Stationery', N'/uploads/products/StarlightInk.png', 65, N'A-15');
+(NEWID(), N'Starlight Ink', N'Glows with your thoughts. For celestial correspondence only.', 22.00, N'Stationery', N'/uploads/products/StarlightInk.png', 65, N'A-15'),
+(NEWID(), N'Philosophers Stone', N'Stone of all wisdom', 69.99, N'Enchanted', N'/uploads/products/PhilosophersStone.png', 39, N'C-13'),
+(NEWID(), N'Silver Tip Crosbow Bolts x5', N'Beast killing accessory for every beast hunter.', 59.25, N'Accessories', N'/uploads/products/SilverTipCrosbowBolts.png', 56, N'C-14'),
+(NEWID(), N'Werewolf Fur', N'Fur used in every powerful potion.', 23.15, N'Arcane Home', N'/uploads/products/WerewolfFur.png', 56, N'C-15'),
+(NEWID(), N'Vampire Fangs', N'Home protection from spells and uninvited guests.', 70.59, N'Arcane Home', N'/uploads/products/VampireFangs.png', 18, N'C-16');
 
 INSERT INTO dbo.Products (Id, [Name], [Description], [Price], [Category], [PictureUrl])
 SELECT ProductId, [Name], [Description], [Price], [Category], [PictureUrl]
